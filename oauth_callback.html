@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OAuth Callback - CMU Library</title>
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script>
+        // Handle OAuth redirect
+        function handleRedirect() {
+            const params = new URLSearchParams(window.location.search);
+            const code = params.get('code');
+            
+            if (code) {
+                // Log the authentication code
+                console.log('Received authentication code:', code);
+                
+                // Wait for the Google API client to load
+                if (typeof gapi !== 'undefined') {
+                    gapi.load('client:auth2', () => {
+                        // Initialize the client
+                        gapi.client.init({
+                            clientId: '229410992558-td9cbs91d4eh0g6aai4mb0570g5tv1pa.apps.googleusercontent.com',
+                            scope: 'https://www.googleapis.com/auth/dialogflow'
+                        }).then(() => {
+                            // Successfully initialized
+                            console.log('Client initialized, redirecting back to main page...');
+                            // Store auth status in localStorage
+                            localStorage.setItem('dialogflow_auth_success', 'true');
+                            // Redirect back to main page
+                            window.location.href = 'index.html';
+                        }).catch(error => {
+                            console.error('Error initializing client:', error);
+                            document.getElementById('status').textContent = 'Authentication error: ' + error.message;
+                        });
+                    });
+                } else {
+                    console.error('Google API client library not loaded');
+                    document.getElementById('status').textContent = 'Error: Google API client library not loaded';
+                }
+            } else {
+                console.error('No authentication code received');
+                document.getElementById('status').textContent = 'Error: No authentication code received';
+            }
+        }
+
+        window.addEventListener('load', handleRedirect);
+    </script>
+    <style>
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            text-align: center;
+            margin-top: 100px;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #C41230;
+        }
+        #status {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f5f5f5;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CMU Library Authentication</h1>
+        <p>Processing authentication, please wait...</p>
+        <div id="status">Authenticating...</div>
+    </div>
+</body>
+</html> 

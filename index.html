@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carnegie Mellon University Library</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/themes/df-messenger-default.css">
+    <script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
+    <script src="auth.js"></script>
+    <script>
+        // Add this script to debug chatbot issues
+        window.addEventListener('load', function() {
+            const dfMessenger = document.querySelector('df-messenger');
+            
+            // Listen for errors
+            dfMessenger.addEventListener('df-messenger-error', (event) => {
+                console.error('Dialogflow Error:', event.detail.error);
+                alert('Chatbot Error: ' + event.detail.error);
+            });
+            
+            // Listen for initialization
+            dfMessenger.addEventListener('df-messenger-loaded', () => {
+                console.log('Dialogflow Messenger loaded!');
+            });
+            
+            // Listen for messages
+            dfMessenger.addEventListener('df-response-received', (event) => {
+                console.log('Got response:', event.detail.response);
+            });
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="cmu-logo.png" alt="Carnegie Mellon University Logo">
+            </div>
+            <div class="site-title">
+                <h1>Carnegie Mellon University Library</h1>
+            </div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#" class="active">Home</a></li>
+                <li><a href="#">Collections</a></li>
+                <li><a href="#">Research</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Hours & Locations</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h2>Welcome to the CMU Library</h2>
+                <p>Supporting education, research, and innovation across the university</p>
+                <div class="search-container">
+                    <input type="text" placeholder="Search books, articles, journals...">
+                    <button type="submit">Search</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="feature-card">
+                <h3>Digital Collections</h3>
+                <p>Access our extensive digital archives, e-books, and online journals.</p>
+                <a href="#" class="btn">Explore</a>
+            </div>
+            <div class="feature-card">
+                <h3>Research Support</h3>
+                <p>Connect with librarians for research assistance and consultations.</p>
+                <a href="#" class="btn">Learn More</a>
+            </div>
+            <div class="feature-card">
+                <h3>Study Spaces</h3>
+                <p>Reserve study rooms, collaborative spaces, and quiet areas.</p>
+                <a href="#" class="btn">Reserve Now</a>
+            </div>
+        </section>
+
+        <section class="announcements">
+            <h2>News & Events</h2>
+            <div class="announcement-grid">
+                <div class="announcement-card">
+                    <h3>Extended Hours for Finals Week</h3>
+                    <p>December 8-19: The library will remain open 24/7 during finals week to support student studies.</p>
+                    <span class="date">November 15, 2023</span>
+                </div>
+                <div class="announcement-card">
+                    <h3>New Database Acquisitions</h3>
+                    <p>We've added three new research databases for engineering and computer science.</p>
+                    <span class="date">November 10, 2023</span>
+                </div>
+                <div class="announcement-card">
+                    <h3>Workshop: Advanced Research Methods</h3>
+                    <p>Join us for a hands-on workshop on advanced research techniques and tools.</p>
+                    <span class="date">November 5, 2023</span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Hours</h3>
+                <p>Monday-Thursday: 7:30am-12:00am</p>
+                <p>Friday: 7:30am-10:00pm</p>
+                <p>Saturday: 10:00am-10:00pm</p>
+                <p>Sunday: 12:00pm-12:00am</p>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p>Phone: (412) 268-2444</p>
+                <p>Email: library@cmu.edu</p>
+                <p>4909 Frew Street</p>
+                <p>Pittsburgh, PA 15213</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#">Library Catalog</a></li>
+                    <li><a href="#">Renew Items</a></li>
+                    <li><a href="#">Interlibrary Loan</a></li>
+                    <li><a href="#">Room Reservations</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Carnegie Mellon University Library. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Dialogflow Chatbot Integration -->
+    <df-messenger
+        location="us-central1"
+        project-id="cmulibrarychatbot-454017"
+        agent-id="224d312f-1d5a-4053-a209-cef7e31044f4"
+        language-code="en"
+        max-query-length="-1"
+        allow-feedback="all"
+        auth-client-id="229410992558-td9cbs91d4eh0g6aai4mb0570g5tv1pa.apps.googleusercontent.com">
+        <df-messenger-chat-bubble
+            chat-title="AI_Chatbot_Agent">
+        </df-messenger-chat-bubble>
+    </df-messenger>
+    <style>
+        df-messenger {
+            z-index: 999;
+            position: fixed;
+            --df-messenger-font-color: #000;
+            --df-messenger-font-family: Google Sans;
+            --df-messenger-chat-background: #f3f6fc;
+            --df-messenger-message-user-background: #d3e3fd;
+            --df-messenger-message-bot-background: #fff;
+            bottom: 16px;
+            right: 16px;
+        }
+    </style>
+</body>
+</html> 
